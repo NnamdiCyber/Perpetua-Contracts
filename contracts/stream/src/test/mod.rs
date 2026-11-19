@@ -84,3 +84,24 @@ mod accrual_indexer_parity;
 // CPU/memory budgets under batch payroll workloads (MAX_BATCH_SIZE streams,
 // pause/resume history, no super-linear growth).
 mod accrual_budget;
+
+// Issue #402: edge-case precision loss in cliff-vesting during fractional
+// stream withdrawal calculations.  Conservation and zero-dust properties
+// verified with both unit tests and proptest sweeps.
+mod cliff_precision;
+
+// Issue #405: Byzantine fault tolerance scenarios for cliff-vesting under
+// simulated network partitions — stale reads, replayed transactions,
+// competing callers, interleaved clock jumps, and adversarial parameter
+// combinations.
+mod cliff_byzantine_fault_tolerance;
+
+// Issue #406: strict invariant assertions (I1–I6) for cliff-vesting to
+// protect against re-entrancy and state desync — bounds, conservation,
+// pause coherence, zero-dust at settlement, and state-machine guard tests.
+mod cliff_invariant_assertions;
+
+// Issue #401: fuzzing coverage for edge-case timestamps in the pause-clock
+// near u64 maximum boundary limits — stream_time saturation, paused_at at
+// MAX, paused_total overflow, and proptest sweeps over the full u64 range.
+mod pause_clock_fuzz;
